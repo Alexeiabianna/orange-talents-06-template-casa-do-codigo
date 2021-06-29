@@ -26,6 +26,8 @@ public class Autor {
         this.descricao = descricao;
     }
 
+    public Autor(){}
+
     public Long getId() {
         return id;
     }

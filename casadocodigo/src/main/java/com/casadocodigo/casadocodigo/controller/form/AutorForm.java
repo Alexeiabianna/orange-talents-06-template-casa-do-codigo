@@ -6,6 +6,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.casadocodigo.casadocodigo.modelo.Autor;
+
 import org.hibernate.validator.constraints.Length;
 
 public class AutorForm {
@@ -26,6 +28,8 @@ public class AutorForm {
     private String descricao;
 
     private LocalDateTime dataCriacao = LocalDateTime.now();
+
+    public AutorForm() {}
 
     public String getNomeAutor() {
         return nomeAutor;
@@ -58,4 +62,10 @@ public class AutorForm {
     public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
+
+    public Autor toModel() {
+        return new Autor(this.nomeAutor, this.email, this.dataCriacao, this.descricao);
+    }
+
+    
 }

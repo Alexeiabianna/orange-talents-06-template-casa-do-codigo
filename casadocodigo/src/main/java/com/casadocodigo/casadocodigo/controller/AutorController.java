@@ -1,6 +1,7 @@
 package com.casadocodigo.casadocodigo.controller;
 
 import java.net.URI;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -25,13 +26,16 @@ public class AutorController {
     private AutorRepository autorRepository;
 
     @PostMapping
-    public ResponseEntity<AutorDto> cadastrar(@RequestBody @Valid AutorForm form, UriComponentsBuilder uriBuilder ) {
-        Autor autor = new Autor(form.getNomeAutor(),form.getEmail(), form.getDataCriacao(), form.getDescricao());
-        autorRepository.save(autor);
-
-        URI uri = uriBuilder.path("/autor/{id}").buildAndExpand(autor.getId()).toUri();
-        return ResponseEntity.created(uri).body(new AutorDto(autor));
+    public ResponseEntity<AutorDto> cadastrar(@RequestBody @Valid AutorForm form, UriComponentsBuilder uriBuilder) {
+        Autor autor = form.toModel();
+        Optional<Autor> optional = autorRepository.findByEmail(form.getEmail());
+        if (!optional.isPresent()) {
+            autorRepository.save(autor);
+            URI uri = uriBuilder.path("/autor/{id}").buildAndExpand(autor.getId()).toUri();
+            return ResponseEntity.created(uri).body(new AutorDto(autor));
+        }
+        return ResponseEntity.notFound().build();
 
     }
-    
+
 }

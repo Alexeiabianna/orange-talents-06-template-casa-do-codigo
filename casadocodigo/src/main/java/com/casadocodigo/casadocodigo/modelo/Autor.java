@@ -16,13 +16,12 @@ public class Autor {
 
     private String nomeAutor;
     private String email;
-    private LocalDateTime dataCriacao;
+    private LocalDateTime dataCriacao = LocalDateTime.now();
     private String descricao;
 
-    public Autor(String nomeAutor, String email, LocalDateTime dataCriacao, String descricao) {
+    public Autor(String nomeAutor, String email, String descricao) {
         this.nomeAutor = nomeAutor;
         this.email = email;
-        this.dataCriacao = dataCriacao;
         this.descricao = descricao;
     }
 

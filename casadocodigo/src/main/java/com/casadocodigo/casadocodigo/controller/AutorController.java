@@ -34,8 +34,7 @@ public class AutorController {
             URI uri = uriBuilder.path("/autor/{id}").buildAndExpand(autor.getId()).toUri();
             return ResponseEntity.created(uri).body(new AutorDto(autor));
         }
-        return ResponseEntity.notFound().build();
-
+        return ResponseEntity.badRequest().build();
     }
 
 }

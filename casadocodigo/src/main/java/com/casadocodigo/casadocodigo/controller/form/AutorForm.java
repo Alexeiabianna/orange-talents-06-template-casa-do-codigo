@@ -25,7 +25,8 @@ public class AutorForm {
     @Length(max = 400)
     private String descricao;
 
-    public AutorForm() {}
+    public AutorForm() {
+    }
 
     public String getNomeAutor() {
         return nomeAutor;
@@ -43,5 +44,4 @@ public class AutorForm {
         return new Autor(this.nomeAutor, this.email, this.descricao);
     }
 
-    
 }

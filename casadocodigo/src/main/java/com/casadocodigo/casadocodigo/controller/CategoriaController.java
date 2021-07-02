@@ -32,6 +32,6 @@ public class CategoriaController {
             return ResponseEntity.ok(new CategoriaDto(categoria));
         }
 
-        return ResponseEntity.badRequest().body(new CategoriaDto(categoria));
+        return ResponseEntity.badRequest().build();
     }
 }

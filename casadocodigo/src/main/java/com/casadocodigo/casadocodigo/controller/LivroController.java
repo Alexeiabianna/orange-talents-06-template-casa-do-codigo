@@ -2,6 +2,8 @@ package com.casadocodigo.casadocodigo.controller;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import com.casadocodigo.casadocodigo.controller.dto.LivroDto;
 import com.casadocodigo.casadocodigo.controller.form.LivroForm;
 import com.casadocodigo.casadocodigo.modelo.Autor;
@@ -32,9 +34,9 @@ public class LivroController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<LivroDto> cadastra(@RequestBody LivroForm form) {
-        Optional<Categoria> optional = categoriaRepository.findById(form.getIdCategoria());
-        Categoria categoria = optional.get();
+    public ResponseEntity<LivroDto> cadastra(@RequestBody @Valid LivroForm form) {
+        Optional<Categoria> optionalCategoria = categoriaRepository.findById(form.getIdCategoria());
+        Categoria categoria = optionalCategoria.get();
 
         Optional<Autor> optionalAutor = autorRepository.findById(form.getIdAutor());
         Autor autor = optionalAutor.get();
@@ -42,6 +44,6 @@ public class LivroController {
         Livro livro = form.toModel(categoria, autor);
         livroRepository.save(livro);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(new LivroDto(livro));
     }
 }

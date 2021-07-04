@@ -3,24 +3,35 @@ package com.casadocodigo.casadocodigo.controller.form;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.casadocodigo.casadocodigo.modelo.Autor;
 import com.casadocodigo.casadocodigo.modelo.Categoria;
 import com.casadocodigo.casadocodigo.modelo.Livro;
 
 public class LivroForm {
 
+    @NotBlank
     private String titulo;
-    private String descricao;
+    @NotBlank @Size(max = 500)
+    private String descricao;    
     private String sumario;
+    @NotNull @Min(20)
     private BigDecimal preco;
+    @NotNull @Min(100)
     private Integer numPaginas;
+    @NotBlank
     private String isbn;
+    @Future
     private LocalDate dataPublicacao;
+    @NotNull
     private Long idCategoria;
+    @NotNull
     private Long idAutor;
-
-    private Autor autor;
-    private Categoria categoria;
 
     public LivroForm() {
     }
@@ -97,9 +108,9 @@ public class LivroForm {
         this.idAutor = idAutor;
     }
 
-    public Livro toModel(Categoria categoria2, Autor autor2) {
+    public Livro toModel(Categoria categoria, Autor autor) {
         return new Livro(this.titulo, this.descricao, this.sumario, this.preco, this.numPaginas, this.isbn,
-                this.dataPublicacao, categoria2, autor2);
+                this.dataPublicacao, categoria, autor);
     }
 
 }

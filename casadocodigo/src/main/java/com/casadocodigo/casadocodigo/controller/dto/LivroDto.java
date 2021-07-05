@@ -2,11 +2,14 @@ package com.casadocodigo.casadocodigo.controller.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.casadocodigo.casadocodigo.modelo.Livro;
 
 public class LivroDto {
 
+    private Long id;
     private String titulo;
     private String descricao;
     private String sumario;
@@ -19,6 +22,7 @@ public class LivroDto {
     }
 
     public LivroDto(Livro livro) {
+        this.id = livro.getId();
         this.titulo = livro.getTitulo();
         this.descricao = livro.getDescricao();
         this.sumario = livro.getSumario();
@@ -54,6 +58,14 @@ public class LivroDto {
 
     public LocalDate getDataPublicacao() {
         return dataPublicacao;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public static List<LivroDto> converter(List<Livro> livros) {
+        return livros.stream().map(LivroDto::new).collect(Collectors.toList());
     }
 
 }

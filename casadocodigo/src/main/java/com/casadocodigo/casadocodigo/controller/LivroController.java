@@ -1,5 +1,6 @@
 package com.casadocodigo.casadocodigo.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -16,6 +17,7 @@ import com.casadocodigo.casadocodigo.repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,5 +47,11 @@ public class LivroController {
         livroRepository.save(livro);
 
         return ResponseEntity.ok().body(new LivroDto(livro));
+    }
+
+    @GetMapping
+    public List<LivroDto> lista() {
+        List<Livro> livros = livroRepository.findAll();
+        return LivroDto.converter(livros);
     }
 }

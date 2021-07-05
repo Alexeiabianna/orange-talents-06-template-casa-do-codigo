@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.casadocodigo.casadocodigo.config.validacao.UniqueValue;
 import com.casadocodigo.casadocodigo.modelo.Autor;
 import com.casadocodigo.casadocodigo.modelo.Categoria;
 import com.casadocodigo.casadocodigo.modelo.Livro;
@@ -25,6 +26,7 @@ public class LivroForm {
     @NotNull @Min(100)
     private Integer numPaginas;
     @NotBlank
+    @UniqueValue(domainClass = Livro.class, fieldName = "isbn")
     private String isbn;
     @Future
     private LocalDate dataPublicacao;

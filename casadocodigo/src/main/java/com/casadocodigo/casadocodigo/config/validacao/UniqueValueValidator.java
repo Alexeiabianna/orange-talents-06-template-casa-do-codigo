@@ -11,7 +11,7 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.util.Assert;
 
 public class UniqueValueValidator implements ConstraintValidator<UniqueValue, Object> {
-    
+
     private String domainAttribute;
     private Class<?> klass;
 
@@ -26,13 +26,13 @@ public class UniqueValueValidator implements ConstraintValidator<UniqueValue, Ob
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
-        Query query = em.createQuery("select 1 from " + klass.getName()+" where "+ domainAttribute+" =:value");
+        Query query = em.createQuery("select 1 from " + klass.getName() + " where " + domainAttribute + " =:value");
         query.setParameter("value", value);
         List<?> list = query.getResultList();
-        Assert.state(list.size() <= 1, "Foi encontrado mais de um "+klass.getName()+" com o atributo "+domainAttribute+" = "+value);
-        
+        Assert.state(list.size() <= 1,
+                "Foi encontrado mais de um " + klass.getName() + " com o atributo " + domainAttribute + " = " + value);
+
         return list.isEmpty();
     }
 
-    
 }

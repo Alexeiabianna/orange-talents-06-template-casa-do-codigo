@@ -4,6 +4,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.casadocodigo.casadocodigo.config.validacao.CPForCNPJ;
 import com.casadocodigo.casadocodigo.config.validacao.UniqueValue;
 import com.casadocodigo.casadocodigo.modelo.Cliente;
 import com.casadocodigo.casadocodigo.modelo.Estado;
@@ -19,7 +20,7 @@ public class ClienteForm {
     private String nome;
     @NotBlank
     private String sobrenome;
-    // criar validation cpf
+    @CPForCNPJ
     private String cpfOrCnpj;
     @NotBlank
     private String endereco;

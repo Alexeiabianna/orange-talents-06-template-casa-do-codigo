@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Estado {
@@ -19,12 +20,15 @@ public class Estado {
     private String nome;
 
     @ManyToOne
-    @NotBlank
-    private Pais nomePais;
+    @NotNull
+    private Pais pais;
 
-    public Estado(@NotBlank String nome, @NotBlank Pais nomePais) {
+    public Estado(){
+    }
+
+    public Estado(@NotBlank String nome, @NotNull Pais pais) {
         this.nome = nome;
-        this.nomePais = nomePais;
+        this.pais = pais;
     }
 
     public Long getId() {
@@ -35,8 +39,8 @@ public class Estado {
         return nome;
     }
 
-    public Pais getNomePais() {
-        return nomePais;
+    public Pais getPais() {
+        return pais;
     }
 
 }

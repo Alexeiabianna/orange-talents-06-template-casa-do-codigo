@@ -1,11 +1,17 @@
 package com.casadocodigo.casadocodigo.controller;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import com.casadocodigo.casadocodigo.controller.dto.EstadoDto;
 import com.casadocodigo.casadocodigo.controller.dto.PaisDto;
+import com.casadocodigo.casadocodigo.controller.form.EstadoForm;
 import com.casadocodigo.casadocodigo.controller.form.PaisForm;
+import com.casadocodigo.casadocodigo.modelo.Estado;
 import com.casadocodigo.casadocodigo.modelo.Pais;
+import com.casadocodigo.casadocodigo.repository.EstadoRepository;
 import com.casadocodigo.casadocodigo.repository.PaisRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +28,30 @@ public class RegiaoController {
     @Autowired
     private PaisRepository paisRepository;
 
-    @PostMapping
+    @Autowired
+    private EstadoRepository estadoRepository;
+
+    @PostMapping("/pais")
     @Transactional
     public ResponseEntity<PaisDto> cadastra(@RequestBody @Valid PaisForm form) {
         Pais pais = form.toModel();
         paisRepository.save(pais);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(new PaisDto(pais));
+    }
+
+    @PostMapping("/estado")
+    @Transactional
+    public ResponseEntity<EstadoDto> cadastra(@RequestBody @Valid EstadoForm form) {
+        Pais pais = paisRepository.getById(form.getIdPais());
+        Estado estado = form.toModel(pais);
+        Optional<Estado> optional = estadoRepository.findByNomeAndPaisId(estado.getNome(), pais.getId());
+        if(!optional.isPresent()) {
+            estadoRepository.save(estado);
+            return ResponseEntity.ok().body(new EstadoDto(estado));         
+        }
+
+        return ResponseEntity.badRequest().build();
 
     }
 }

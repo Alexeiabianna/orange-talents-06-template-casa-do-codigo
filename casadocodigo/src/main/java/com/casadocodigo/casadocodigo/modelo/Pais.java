@@ -6,8 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
-import com.casadocodigo.casadocodigo.config.validacao.UniqueValue;
-
 @Entity
 public class Pais {
 
